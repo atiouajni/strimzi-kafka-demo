@@ -5,10 +5,7 @@ I used Strimzi to operate Kafka cluster. You can find more details about how Str
 
 ```shell
 ├── manifests
-│   ├── apicurio
-│   ├── couchbase
 │   ├── grafana
-│   ├── openshift
 │   ├── prometheus
 │   └── strimzi
 └── src
