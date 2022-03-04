@@ -1,0 +1,11 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: prometheus-route
+spec:
+  path: /
+  to:
+    kind: Service
+    name: prometheus-operated
+  port:
+    targetPort: web
