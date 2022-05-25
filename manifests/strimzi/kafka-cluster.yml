@@ -33,12 +33,7 @@ spec:
           name: kafka-metrics
     replicas: 3
     storage:
-      type: jbod
-      volumes:
-        - deleteClaim: false
-          id: 0
-          size: 10Gi
-          type: persistent-claim
+      type: ephemeral
     version: 3.0.0
   zookeeper:
     metricsConfig:
@@ -49,9 +44,7 @@ spec:
           name: kafka-metrics
     replicas: 3
     storage:
-      deleteClaim: false
-      size: 10Gi
-      type: persistent-claim
+      type: ephemeral
   entityOperator:
     topicOperator: {}
     userOperator: {}
