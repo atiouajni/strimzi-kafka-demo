@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-consumer
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kafka-consumer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kafka-consumer
+        app.kubernetes.io/component: kafka-consumer
+    spec:
+      containers:
+      - name: kafka-consumer
+        image: image-registry.openshift-image-registry.svc:5000/kafka/kafka-consumer:latest
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: TRUSTSTORE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: kafka-consumer-app
+              key: truststore.password
+        - name: KEYSTORE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: kafka-consumer-app
+              key: keystore.password
+        - name: SPRING_CONFIG_LOCATION
+          value: file:///tmp/config/application.yml 
+        volumeMounts:
+        - name: kafka-consumer-secret
+          mountPath: /tmp/secret
+        - name: kafka-consumer-config
+          mountPath: /tmp/config
+      volumes:
+      - name: kafka-consumer-secret
+        secret:
+          secretName: kafka-consumer-app
+      - name: kafka-consumer-config
+        configMap:
+          name: kafka-consumer-app

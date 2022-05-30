@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-producer
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kafka-producer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kafka-producer
+        app.kubernetes.io/component: kafka-producer
+    spec:
+      containers:
+      - name: kafka-producer
+        image: image-registry.openshift-image-registry.svc:5000/kafka/kafka-producer:latest
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: TRUSTSTORE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: kafka-producer-app
+              key: truststore.password
+        - name: KEYSTORE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: kafka-producer-app
+              key: keystore.password
+        - name: SPRING_CONFIG_LOCATION
+          value: file:///tmp/config/application.yml 
+        volumeMounts:
+        - name: kafka-producer-secret
+          mountPath: /tmp/secret
+        - name: kafka-producer-config
+          mountPath: /tmp/config
+      volumes:
+      - name: kafka-producer-secret
+        secret:
+          secretName: kafka-producer-app
+      - name: kafka-producer-config
+        configMap:
+          name: kafka-producer-app
