@@ -9,4 +9,4 @@ You can find more details about how Strimzi simplify Kafka operational tasks in 
 
 **2 - Accessing to a secure Kafka cluster from Spring Boot applications**
 
-You can find [here](https://anissetiouajni.com/posts/accessing_a_secure_apache_kafka_managed_by_strimzi_from_quarkus/) how I create a Kafka producer and consumer based on Spring Boot framework to access a secure Kafka cluster.
+You can find [here](https://anissetiouajni.com/posts/accessing_a_secure_apache_kafka_managed_by_strimzi_from_springboot/) how I create a Kafka producer and consumer based on Spring Boot framework to access a secure Kafka cluster.
